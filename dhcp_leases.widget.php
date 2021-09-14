@@ -272,11 +272,13 @@ $leasesfile = dhcpd_dhcpv4_leasesfile();
     <tr>
       <th><a href="#"><?=gettext("IP address"); ?></a></th>
       <th><a href="#"><?=gettext("Hostname"); ?></a></th>
+      <th><a href="#"><?=gettext("Lease type"); ?></a></th>
+      <th><a href="#"><?=gettext("Status"); ?></a></th>
     </tr>
   </thead>
   <tbody>
 <?php
-foreach ($leases as $data) {
+foreach ($leases as $data):
 	if (($data['act'] == "active") || ($data['act'] == "static") || ($_GET['all'] == 1)) {
 		if ($data['act'] != "active" && $data['act'] != "static") {
 			$fspans = "<span class=\"gray\">";
@@ -307,13 +309,19 @@ foreach ($leases as $data) {
                    	break;
 				}
 			}
-		}		
-		echo "<tr>\n";
-		echo "<td class=\"listlr\">{$fspans}{$data['ip']}{$fspane}&nbsp;</td>\n";
-		echo "<td class=\"listr\">{$fspans}"  . htmlentities($data['hostname']) . "{$fspane}&nbsp;</td>\n";
-		echo "</tr>\n";
-	}
-}
+		}
+    } ?>
+        <tr>
+            <td><?=$data['ip'];?></td>
+            <td><?=$data['hostname'];?></td>
+            <td><?=$data['act'];?></td>
+            <td>
+                <i class="fa fa-<?=$data['online']=='online' ? 'signal' : 'ban';?>" title="<?=$data['online'];?>" data-toggle="tooltip"></i>
+            </td>
+        </tr>    
+
+        <?php
+              endforeach;
 ?>
 <?php if($leases == 0): ?>
   <tr><td colspan="3"><?=gettext("No leases file found. Is the DHCP server active");?></td></tr>
