@@ -40,19 +40,6 @@ require_once("config.inc");
 require_once("interfaces.inc");
 require_once("plugins.inc.d/dhcpd.inc");
 
-function adjust_utc($dt)
-{
-    foreach (config_read_array('dhcpd') as $dhcpd) {
-        if (!empty($dhcpd['dhcpleaseinlocaltime'])) {
-            /* we want local time, so specify this is actually UTC */
-            return strftime('%Y/%m/%d %H:%M:%S', strtotime("{$dt} UTC"));
-        }
-    }
-
-    /* lease time is in UTC, here just pretend it's the correct time */
-    return strftime('%Y/%m/%d %H:%M:%S UTC', strtotime($dt));
-}
-
 function remove_duplicate($array, $field)
 {
     foreach ($array as $sub) {
