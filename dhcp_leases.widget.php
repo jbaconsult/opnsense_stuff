@@ -270,10 +270,10 @@ $leasesfile = dhcpd_dhcpv4_leasesfile();
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
-      <th><a href="#"><?=gettext("IP address"); ?></a></th>
-      <th><a href="#"><?=gettext("Hostname"); ?></a></th>
-      <th><a href="#"><?=gettext("Lease type"); ?></a></th>
-      <th><a href="#"><?=gettext("Status"); ?></a></th>
+      <th><?=gettext("IP address"); ?></th>
+      <th><?=gettext("Hostname"); ?></th>
+      <th><?=gettext("Lease type"); ?></th>
+      <th><?=gettext("Status"); ?></th>
     </tr>
   </thead>
   <tbody>
