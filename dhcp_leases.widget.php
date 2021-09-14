@@ -318,12 +318,11 @@ foreach ($leases as $data):
             <td>
                 <i class="fa fa-<?=$data['online']=='online' ? 'signal' : 'ban';?>" title="<?=$data['online'];?>" data-toggle="tooltip"></i>
             </td>
-        </tr>    
-
-        <?php
-              endforeach;
+        </tr> 
+<?php
+endforeach;
 ?>
 <?php if($leases == 0): ?>
-  <tr><td colspan="3"><?=gettext("No leases file found. Is the DHCP server active");?></td></tr>
+  <tr><td colspan="4"><?=gettext("No leases file found. Is the DHCP server active");?></td></tr>
 <?php endif; ?>
 </table>
