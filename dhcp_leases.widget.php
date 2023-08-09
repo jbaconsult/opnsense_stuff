@@ -53,7 +53,7 @@ function remove_duplicate($array, $field)
 }
 
 $interfaces = legacy_config_get_interfaces(array('virtual' => false));
-$leasesfile = dhcpd_dhcpv4_leasesfile();
+$leasesfile = '/var/dhcpd/var/db/dhcpd.leases';
 
     $awk = "/usr/bin/awk";
     /* this pattern sticks comments into a single array item */
