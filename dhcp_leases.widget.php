@@ -257,59 +257,69 @@ $leasesfile = '/var/dhcpd/var/db/dhcpd.leases';
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
-      <th><?=gettext("IP address"); ?></th>
-      <th><?=gettext("Hostname"); ?></th>
-      <th><?=gettext("Lease type"); ?></th>
-      <th><?=gettext("Status"); ?></th>
+      <th><?= gettext("IP address"); ?></th>
+      <th><?= gettext("Hostname"); ?></th>
+      <th><?= gettext("Lease type"); ?></th>
+      <th><?= gettext("Status"); ?></th>
     </tr>
   </thead>
   <tbody>
-<?php
-foreach ($leases as $data):
-	if (($data['act'] == "active") || ($data['act'] == "static") || ($_GET['all'] == 1)) {
-		if ($data['act'] != "active" && $data['act'] != "static") {
-			$fspans = "<span class=\"gray\">";
-			$fspane = "</span>";
-		} else {
-			$fspans = $fspane = "";
-		}
-		
-		$lip = ip2ulong($data['ip']);
-		if ($data['act'] == "static") {
-			foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf) {
-				if(is_array($dhcpifconf['staticmap'])) {
-					foreach ($dhcpifconf['staticmap'] as $staticent) {
-						if ($data['ip'] == $staticent['ipaddr']) {
-							$data['if'] = $dhcpif;
-							break;
-						}
-					}
-				}
-				/* exit as soon as we have an interface */
-				if ($data['if'] != "")
-					break;
-			}
-		} else {
-            foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf) {	
-               	if (($lip >= ip2ulong($dhcpifconf['range']['from'])) && ($lip <= ip2ulong($dhcpifconf['range']['to']))) {
-                   	$data['if'] = $dhcpif;
-                   	break;
-				}
-			}
-		}
-    } ?>
-        <tr>
-            <td><?=$data['ip'];?></td>
-            <td><?=$data['hostname'];?></td>
-            <td><?=$data['act'];?></td>
-            <td>
-                <i class="fa fa-<?=$data['online']=='online' ? 'signal' : 'ban';?>" title="<?=$data['online'];?>" data-toggle="tooltip"></i>
-            </td>
-        </tr> 
-<?php
-endforeach;
-?>
-<?php if($leases == 0): ?>
-  <tr><td colspan="4"><?=gettext("No leases file found. Is the DHCP server active");?></td></tr>
-<?php endif; ?>
+    <?php
+    foreach ($leases as $data) :
+      // Skip rows where $data['act'] is "expired"
+      if ($data['act'] == "expired") {
+        continue;
+      }
+
+      if (($data['act'] == "active") || ($data['act'] == "static") || ($_GET['all'] == 1)) {
+        if ($data['act'] != "active" && $data['act'] != "static") {
+          $fspans = "<span class=\"gray\">";
+          $fspane = "</span>";
+        } else {
+          $fspans = $fspane = "";
+        }
+
+        $lip = ip2ulong($data['ip']);
+        if ($data['act'] == "static") {
+          foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf) {
+            if (is_array($dhcpifconf['staticmap'])) {
+              foreach ($dhcpifconf['staticmap'] as $staticent) {
+                if ($data['ip'] == $staticent['ipaddr']) {
+                  $data['if'] = $dhcpif;
+                  break;
+                }
+              }
+            }
+            /* exit as soon as we have an interface */
+            if ($data['if'] != "")
+              break;
+          }
+        } else {
+          foreach ($config['dhcpd'] as $dhcpif => $dhcpifconf) {
+            if (($lip >= ip2ulong($dhcpifconf['range']['from'])) && ($lip <= ip2ulong($dhcpifconf['range']['to']))) {
+              $data['if'] = $dhcpif;
+              break;
+            }
+          }
+        }
+      }
+    ?>
+      <tr>
+        <td><?= $data['ip']; ?></td>
+        <td><?= $data['hostname']; ?></td>
+        <td><?= $data['act']; ?></td>
+        <td>
+          <i class="fa fa-<?= $data['online'] == 'online' ? 'signal' : 'ban'; ?>" title="<?= $data['online']; ?>" data-toggle="tooltip"></i>
+        </td>
+      </tr>
+    <?php
+    endforeach;
+    ?>
+    <?php if (empty($leases)) : ?>
+      <tr>
+        <td colspan="4"><?= gettext("No leases file found. Is the DHCP server active"); ?></td>
+      </tr>
+    <?php endif; ?>
+  </tbody>
 </table>
+
