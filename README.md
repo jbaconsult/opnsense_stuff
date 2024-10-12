@@ -1,8 +1,9 @@
-# opnsense_stuff
-This repository contains some stuff I made for the OPNsense firewall
+#     opnsense_dhcp_lease
+FOR OPNsense 24.7 +
 
 ## install dhcp widget
-- download dhcp_leases.widget.php ➡ /usr/local/www/widgets/widgets
-- download dhcp_leases.inc ➡ /usr/local/www/widgets/include
+- download Leases.js ➡ /usr/local/opnsense/www/js/widgets
+- download Core.xml, add to /usr/local/opnsense/www/js/widgets/Metadata/Core.xml before \</metadata\>
+ 
 
 
