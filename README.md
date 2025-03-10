@@ -3,7 +3,7 @@ Tested on OPNsense 24.7+
 
 ## Install
 
-Open a ssh session run:
+Open a `ssh` session and run:
 
 ```
 fetch -o https://raw.githubusercontent.com/mietzen/opnsense_leases_widget/refs/heads/main/Leases.js /usr/local/opnsense/www/js/widgets/Leases.js
