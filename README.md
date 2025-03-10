@@ -1,9 +1,11 @@
-#     opnsense_dhcp_lease
-FOR OPNsense 24.7 +
+# OPNsense DHCPv4 Lease Widget
+Tested on OPNsense 24.7+
 
-## install dhcp widget
-- download Leases.js ➡ /usr/local/opnsense/www/js/widgets
-- download Core.xml, add to /usr/local/opnsense/www/js/widgets/Metadata/Core.xml before \</metadata\>
- 
+## Install
 
+Open a `ssh` session and run:
 
+```
+fetch -o /usr/local/opnsense/www/js/widgets/Leases.js https://raw.githubusercontent.com/jbaconsult/opnsense_leases_widget/refs/heads/main/Leases.js
+fetch -o /usr/local/opnsense/www/js/widgets/Metadata/Leases.xml https://raw.githubusercontent.com/jbaconsult/opnsense_leases_widget/refs/heads/main/Leases.xml
+ ```

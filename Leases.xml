@@ -1,3 +1,4 @@
+ <metadata>
     <leases>
         <filename>Leases.js</filename>
         <endpoints>
@@ -16,3 +17,4 @@
             <nolease>No leases</nolease>
         </translations>
     </leases>
+</metadata>
